@@ -1,11 +1,17 @@
 # Cool Speedometer 😎
 If you are tired of all those boring speedometers for react native, have a look at this one. This is different. This is cool.
-![Cool speedometer](https://lh3.googleusercontent.com/fife/ABSRlIoDnJ_6BjNbRy1nmFxSh9pD5xFuO1gzAZNgLVH8AnpjXNtB6ZhIb6TJ8SBno3SNfr9w97uhMmhQgkYEMfWnNWRQOzmmyTwzghX-28H1rdX__FiBTdo8fuy2D2jq30OHNB9D7y2n9Aa9Jj0UtqPemt3C0cv4vL9MTvX9UB-WjZYHOqtd8k0griFTBtid8lHolzD83m4-TStgUJ9ITEDBzWqlljGgXjJ6gi4lbHBCEsTHBVclQrveYl3b4SnmeNVDJ4ba03nokOt98FLg3vx_sVLdC9iFb0H2RVNlceoD1vezGBmDiqW_TenK2ROncSrjOHfJP7bAb_Uy46icLkFQBE7B9gtS6JWxdR5oiMKaypWTgv65MlyFF1GSySLAML0jGd1rvy-yzQ-r7lgPZSOGnHxwVIQgSP35DYpzDJxqIEQ8DJyYnPwnk7zV69zckhpHglZgTd2QISlwjFeVZu_Y2WurU5HIk1auW0qkXrWqUWgv0dfRzsWxRoFsGXv1FqsrTe8vN-wi0sxdIxOOkhzJGeZvEQG83b8KOtau-pA2NLqqsMkwxj1QFStw4pK0QjT-Z66tW-iGsH49wwDYTj7Yr8tXwwK42XkiNXpgwI0Ti-7oHExskPoVDB81xt6Le3NjjHtlJ1MXRQoT2J_atPNN0u5Gn4_Rc_U4nCHPUBxhZkYtC_lyN2fPJ1x6yLMHWDeTkEqgM6OvPhwqLobFH8FBfWyKOSVoj-x-X3U=w1854-h980-ft)
+![Cool speedometer](./assets/speeds.png)
+
 ✅ Flexible
+
 ✅ Good-looking
+
 ✅ Animated
+
 ✅ More customization than you'll use
+
 ✅ Cool 😎
+
 
 Install it for free:
 ```bash
@@ -13,17 +19,17 @@ npm i react-native-cool-speedometer
 ```
 
 ## Usage
-![Default speedometer](https://lh3.googleusercontent.com/fife/ABSRlIpRxl8NdiR9yCn6mDzuYVygKzepFUojMUfhVucVUnKag6kw_fe_vljbuRDIOnQcBpOJ50hroo6z8rNB3b2Z3CErZBzEW2eYI91ltPuQCi8C7-NDztaSMQihLt5kkged0_dZvQUc4ALwYOAv8eaUUjoGjcEsskiSY0zrICIW0iJ49foLTk1JXX25aLbTS_Am9m8KcHV2ejSz1goMSJWzUWGhHI7nJxkRZKKs4dvfBn-4W3mTdRCfsQvgqIMpcwqb4AZlquLdLslisAY0aLsaBvZDftv6MEozEU4fxgrbbjqmC07AFiyGmr3FuE3dpoOveWjutk_XoPMDsCScXpDjTf-kjivyHf88x7BQWYo7Ync3YVy30ndRGo4emTLpDjHViKmMjBUUxkNFEjK-wE-B_mg-EjbO78K8y2m3wkLjPShjU7pRyT-zHyRH9MMKEuHGMupgDGzroQDq15UBPkBfXhT5msqYZgpqUweG3yVp7ttdiSueoaQS51GfPLfxDJaUoMxH-BFzM9Iz2QTGOHsUkuz2vrx9KQEseiyfaB86vRAecD8-7VThmAf7kPtkix0HY6admijQn6Mfb4L-2fhBGyTn91kA3ybpm_StMmTtzWKnn2Xn4Boc7yEGluC2cVqLB4eEA1uOlaU9Mutp0m3AsxPdIlebV1WHhvRCNJovsG0R9FBR4evJ1FtAie_4YENYr2yk8Vczn516yfp0ukyx_P15XgLzuP3s270=w1333-h980-ft)
+![Default speedometer](./assets/default.png)
 ```js
 <Speedometer
-    value={128}
-    fontFamily='squada-one'
+  value={128}
+  fontFamily='squada-one'
 />
 ```
 Note you'll need to configure the font by your own.
 
 ### Playing with angle
-![Half speedometer](https://lh3.google.com/u/0/d/12oTd7CXs58PnXppWFfqg0yru2DExZnmo=w1333-h980-iv1)
+![Half speedometer](./assets/half.png)
 ```js
 <Speedometer
   value={54}
@@ -42,7 +48,7 @@ Note you'll need to configure the font by your own.
 
 ### Rotated
 Changing `rotation`, `step`, the looking of the needle, and adding an optional "danger zone":
-![Rotated speedometer](https://lh3.google.com/u/0/d/1aIp1Ph8Ozvad-ZMJhdukcpO0QM4IZWMt=w1333-h980-iv1)
+![Rotated speedometer](./assets/rotated.png)
 ```js
 <Speedometer
   primaryArcWidth={10}
@@ -61,7 +67,7 @@ Changing `rotation`, `step`, the looking of the needle, and adding an optional "
 ```
 
 ### Circular progress
-![Circular progress](https://lh3.google.com/u/0/d/1b5XpatEfKizRNvQc2pfsoVgmIcNW65tO=w1333-h980-iv1)
+![Circular progress](./assets/progress.png)
 ```js
 <Speedometer
   primaryArcWidth={40}
@@ -85,7 +91,8 @@ Changing `rotation`, `step`, the looking of the needle, and adding an optional "
 
 ### More options
 Make it as ugly as you want:
-![Ugly speedometer](https://lh3.google.com/u/0/d/1RY2zCqyAJRN1jCBC50rLQr0Woj2a_fVk=w1333-h980-iv1)
+
+![Ugly speedometer](./assets/colored.png)
 ```js
 <Speedometer
   value={73}
