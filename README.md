@@ -1,10 +1,7 @@
 # Cool Speedometer 😎
 If you are tired of all those boring speedometers for react native, have a look at this one. This is different. This is cool.
-<figure class="video_container" style="width: 100%; max-width: 550px; margin: 20px 0;">
-  <video muted="true" autoplay="true" loop style="width: 100%; border-radius: 5px;">
-    <source src="./assets/cool-speedometer.mp4" type="video/mp4">
-  </video>
-</figure>
+
+![Cool speedometer](./assets/cool-speedometer.gif)
 
 ![Cool speedometer](./assets/speeds.png)
 
