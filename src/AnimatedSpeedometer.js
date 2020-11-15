@@ -84,7 +84,7 @@ AnimatedSpeedometer.propTypes = {
 };
 
 AnimatedSpeedometer.defaultProps = {
-  duration: 150,
+  duration: 300,
   easing: Easing.out(Easing.ease),
   prefill: 0,
   useNativeDriver: false,
