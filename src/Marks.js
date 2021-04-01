@@ -31,8 +31,11 @@ export default function Marks({
     lineColor = 'white',
     lineOpacity = 1,
     numbersRadius = 17,
-    numbersFontSize = 19
+    numbersFontSize = 19,
+    roundNumbers = true
   } = options
+
+  const getFormatedStepNumber = (val) => roundNumbers ? Math.round(val) : val;
 
   return(
     <>
@@ -73,7 +76,7 @@ export default function Marks({
                 opacity="0.8"
                 fontSize={numbersFontSize}
               >
-                {i * step}
+                {getFormatedStepNumber(i * step)}
               </Text>
             )}
           </G>

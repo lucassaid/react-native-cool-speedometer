@@ -177,3 +177,4 @@ Make it as ugly as you want:
 | lineOpacity| 1 | number | Opacity of the lines |
 | numbersRadius| 17 | string | Change this to place the numbers closer or farther of the center. |
 | numbersFontSize| 19 | string | Font size of the number marks |
+| roundNumbers | false | boolean | Round the numbers in case of decimal value. |
