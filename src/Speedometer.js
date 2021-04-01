@@ -205,7 +205,7 @@ Speedometer.propTypes = {
   renderCap: PropTypes.func,
   max: PropTypes.number,
   noIndicator: PropTypes.bool,
-  backgroundColor: PropTypes.number,
+  backgroundColor: PropTypes.string,
   backgroundOpacity: PropTypes.number,
   step: PropTypes.number,
   marksFontFamily: PropTypes.string,
@@ -220,7 +220,7 @@ Speedometer.propTypes = {
   marks: PropTypes.object,
   noNumberMarks: PropTypes.bool,
   noBackground: PropTypes.bool,
-  indicatorSuffix: PropTypes.object,
+  indicatorSuffix: PropTypes.string,
   indicatorSuffixStyle: PropTypes.object,
   fontFamily: PropTypes.string,
   backgroundAngle: PropTypes.number
