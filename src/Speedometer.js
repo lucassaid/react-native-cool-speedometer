@@ -49,7 +49,9 @@ export default function Speedometer({
   backgroundAngle = 360,
   fontFamily = 'helvetica',
   indicatorSuffix,
-  indicatorSuffixStyle = {}
+  indicatorSuffixStyle = {},
+  calcSizeByAngle = false,
+  calcSizeByAngleIndicatorHeight = 0
 }) {
 
   const radius = size / 2;
@@ -132,10 +134,14 @@ export default function Speedometer({
       />
     )
   }
+
+  const getViewHeight = () => calcSizeByAngle ? (size*(backgroundAngle/360)) + calcSizeByAngleIndicatorHeight : size;
+
+  const getSvgHeight = () =>  calcSizeByAngle ? (size*(backgroundAngle/360)) + 20 : size;
   
   return (
-    <View style={{width: size, height: size, marginRight: 25, ...style}}>
-      <Svg width={size} height={size}>
+    <View style={{width: size, height: getViewHeight(), marginRight: 25, ...style}}>
+      <Svg width={size} height={getSvgHeight()}>
         <G
           rotation={finalRotation}
           originX={radius}
@@ -223,5 +229,7 @@ Speedometer.propTypes = {
   indicatorSuffix: PropTypes.string,
   indicatorSuffixStyle: PropTypes.object,
   fontFamily: PropTypes.string,
-  backgroundAngle: PropTypes.number
+  backgroundAngle: PropTypes.number,
+  calcSizeByAngle: PropTypes.bool,
+  calcSizeByAngleIndicatorHeight: PropTypes.number
 };
