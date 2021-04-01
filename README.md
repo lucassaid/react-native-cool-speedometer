@@ -158,7 +158,8 @@ Make it as ugly as you want:
 | fontFamily | 'helvetica' | string | Font to use in the indicator and the marks. You need to configure in your project the font you want to use. |
 | indicatorSuffix | | string | Text to append to the indicator, for example 'k/h' or '%'. |
 | indicatorSuffixStyle | {} | object | Style applied to the suffix of the indicator. (You can reduce its font size to make it more cool). |
-
+| calcSizeByAngle | false | boolean | Calculate the component view by angle, usable when in case when component is square and the height calculated by backgroundAngle |
+| calcSizeByAngleIndicatorHeight | number | 0 | When calcSizeByAngle is used with bottom indicator, the indicator height must be added to total height | 
 
 ### Needle Options
 | Prop | Default | Type | Description |
@@ -177,3 +178,4 @@ Make it as ugly as you want:
 | lineOpacity| 1 | number | Opacity of the lines |
 | numbersRadius| 17 | string | Change this to place the numbers closer or farther of the center. |
 | numbersFontSize| 19 | string | Font size of the number marks |
+| roundNumbers | false | boolean | Round the numbers in case of decimal value. |
