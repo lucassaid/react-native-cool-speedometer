@@ -34,6 +34,6 @@ export default function Needle ({center, options, accentColor}) {
   )
 }
 
-Needle.PropTypes = {
+Needle.propTypes = {
   center: PropTypes.number,
 }
