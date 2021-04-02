@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, View } from 'react-native';
 import { Svg, Path, G } from 'react-native-svg';
@@ -60,13 +60,13 @@ export default function Speedometer({
   
   const Background = () => {
     const backgroundStart = finalRotation + backgroundAngle / 2
-    const backgroundPath = getCirclePath(
+    const backgroundPath = useMemo(() => getCirclePath(
       radius,
       radius,
       radius,
       -backgroundStart,
       -backgroundStart + backgroundAngle
-    )
+    ), [radius]);
     return(
       <Path
         d={backgroundPath}
@@ -77,13 +77,13 @@ export default function Speedometer({
   }
 
   const PrimaryPath = () => {
-    const progressPath = getCirclePath(
+    const progressPath = useMemo(()=> getCirclePath(
       radius,
       radius,
       radius - primaryArcWidth / 2,
       0,
       currentFillAngle
-    )
+    ), [radius, currentFillAngle]);
     return(
       <Path
         d={progressPath}
@@ -96,13 +96,13 @@ export default function Speedometer({
   }
 
   const SecondaryPath = () => {
-    const secondaryPath = getCirclePath(
+    const secondaryPath = useMemo(() => getCirclePath(
       radius,
       radius,
       radius - secondaryArcWidth / 2,
       0,
       angle
-    )
+    ), [radius]);
     return (
       <Path
         d={secondaryPath}
@@ -135,13 +135,19 @@ export default function Speedometer({
     )
   }
 
-  const getViewHeight = () => calcSizeByAngle ? (size*(backgroundAngle/360)) + calcSizeByAngleIndicatorHeight : size;
+  const viewHeight = useMemo(
+    () => calcSizeByAngle ? (size*(backgroundAngle/360)) + calcSizeByAngleIndicatorHeight : size,
+    [size, backgroundAngle]
+  );
 
-  const getSvgHeight = () =>  calcSizeByAngle ? (size*(backgroundAngle/360)) + 20 : size;
+  const svgHeight = useMemo(
+    () =>  calcSizeByAngle ? (size*(backgroundAngle/360)) + 20 : size,
+    [size, backgroundAngle]
+  );
   
   return (
-    <View style={{width: size, height: getViewHeight(), marginRight: 25, ...style}}>
-      <Svg width={size} height={getSvgHeight()}>
+    <View style={{width: size, height: viewHeight, marginRight: 25, ...style}}>
+      <Svg width={size} height={svgHeight}>
         <G
           rotation={finalRotation}
           originX={radius}
