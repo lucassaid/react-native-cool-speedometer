@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { polarToCartesian } from './utils'
 import { G, Line, Text } from 'react-native-svg';
 
@@ -14,6 +14,41 @@ export default function Marks({
   fontFamily
 }) {
 
+  const [optionsState, setOptionsState] = useState(
+    {
+      lineCap: 'butt',
+      lineColor: 'white',
+      lineOpacity: 1,
+      numbersRadius: 17,
+      numbersFontSize: 19,
+      roundNumbers: true,
+      ...options
+    }
+  );
+
+  const [marks, setMarks] = useState([]);
+
+  useEffect(() => { 
+    const marksLen = Math.round(max/step)+1;
+    const gap = angle / (marksLen-1);
+
+    setMarks(
+      [...Array(marksLen)].map((val, idx, arr) => {
+        const actualAngle = gap * idx;
+        const highlight = idx%2 == 0
+        const size = highlight ? 15 : 10;
+
+        return {
+          highlight: highlight,
+          c: {...getMarkPosition(actualAngle, 0)},
+          size: size,
+          c2: {...getMarkPosition(actualAngle, -size)},
+          cText: {...getMarkPosition(actualAngle, - 10 - optionsState.numbersRadius)}
+        }
+      })
+    );
+  }, [max, step, radius]);
+
   const getMarkPosition = (angle, offset) => {
     return polarToCartesian(
       radius,
@@ -23,58 +58,36 @@ export default function Marks({
     )
   }
 
-  const stepsLength = Math.round(max / step)
-  const marksArr = Array.from(Array(stepsLength + 1))
-
-  const {
-    lineCap = 'butt',
-    lineColor = 'white',
-    lineOpacity = 1,
-    numbersRadius = 17,
-    numbersFontSize = 19,
-    roundNumbers = true
-  } = options
-
-  const getFormatedStepNumber = (val) => roundNumbers ? Math.round(val) : val;
+  const getFormatedStepNumber = (val) => optionsState.roundNumbers ? Math.round(val) : val;
 
   return(
     <>
-      {marksArr.map((mark, i) => {
-        const gap = angle / (marksArr.length - 1)
-        const actualAngle = gap * i
-        const highlight = i%2 == 0
-        const {x: cx, y: cy} = getMarkPosition(actualAngle, 0)
-
-        const lineSize = 15 
-        const size = highlight ? lineSize : lineSize - 5
-        const {x: cx2, y: cy2} = getMarkPosition(actualAngle, - size)
-        const {x: cxText, y: cyText} = getMarkPosition(actualAngle, - lineSize - numbersRadius)
-
+      {marks.map((mark, i) => {
         return(
           <G key={i}>
             {!noLineMarks && (
               <Line
-                x1={cx}
-                y1={cy}
-                x2={cx2}
-                y2={cy2}
-                stroke={lineColor}
-                strokeWidth={highlight ? 4 : 2}
-                strokeOpacity={lineOpacity}
-                strokeLinecap={lineCap}
+                x1={mark.c.x}
+                y1={mark.c.y}
+                x2={mark.c2.x}
+                y2={mark.c2.y}
+                stroke={optionsState.lineColor}
+                strokeWidth={mark.highlight ? 4 : 2}
+                strokeOpacity={optionsState.lineOpacity}
+                strokeLinecap={optionsState.lineCap}
               />
             )}
-            {highlight && !noNumberMarks && (
+            {mark.highlight && !noNumberMarks && (
               <Text
-                x={cxText}
-                y={cyText}
+                x={mark.cText.x}
+                y={mark.cText.y}
                 fill="white"
-                transform={`rotate(${360 - rotation}, ${cxText}, ${cyText})`}
+                transform={`rotate(${360 - rotation}, ${mark.cText.x}, ${mark.cText.y})`}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fontFamily={fontFamily}
                 opacity="0.8"
-                fontSize={numbersFontSize}
+                fontSize={optionsState.numbersFontSize}
               >
                 {getFormatedStepNumber(i * step)}
               </Text>
