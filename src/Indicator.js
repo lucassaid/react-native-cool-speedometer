@@ -1,60 +1,39 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { Text } from 'react-native-svg'
+import Context from './context'
 
 export default function Indicator({
-  value,
-  style,
-  centered,
-  fontFamily,
   suffix,
-  suffixStyle
+  fontSize = 45,
+  color = 'white',
+  fontFamily,
+  ...textProps
 }) {
 
-  const centeredStyles = centered 
-    ? ({alignItems: 'center'})
-    : {}
+  const {
+    value,
+    radius,
+    rotation,
+    fontFamily: globalFontFamily,
+  } = useContext(Context)
 
-  const containerStyles = StyleSheet.flatten([
-    styles.indicatorContainer,
-    centeredStyles
-  ])
-
-  const fontSize = style.fontSize || 50
-
-  return(
-    <View style={containerStyles}>
-      <Text style={{
-        position: 'relative',
-        color: 'white',
-        fontSize,
-        fontFamily,
-        ...style
-      }}>
-        {Number(value).toFixed()}
-        {suffix && (
-          <Text style={{
-            fontSize: fontSize - 10,
-            ...suffixStyle
-          }}>
-            {suffix}
-          </Text>
-        )}
-      </Text>
-    </View>
+  return (
+    <Text
+      transform={`rotate(${360 - rotation}, ${radius}, ${radius})`}
+      x={radius}
+      y={radius + radius / 2 + 10}
+      textAnchor="middle"
+      fontSize={fontSize}
+      fontFamily={fontFamily || globalFontFamily}
+      fill={color}
+      {...textProps}
+    >
+      {Number(value).toFixed()}
+      {suffix && (
+        <Text >
+          {suffix}
+        </Text>
+      )}
+    </Text>
   )
 }
-
-const styles = StyleSheet.create({
-  indicatorContainer: {
-    position: 'absolute',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    height: '100%',
-    bottom: 0,
-    left: 0,
-    alignItems: 'flex-end',
-    padding: 10
-  }
-})

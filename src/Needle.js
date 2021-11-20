@@ -1,27 +1,27 @@
-import React from 'react';
-import { G, Polygon, Circle } from 'react-native-svg';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react'
+import { G, Polygon, Circle } from 'react-native-svg'
+import Context from './context'
 
-export default function Needle ({center, options, accentColor}) {
-  const {
-    baseWidth = 6,
-    baseOffset = 18,
-    color = 'white',
-    circleRadius = 15,
-    circleColor = accentColor,
-  } = options
-
-  const bottom = center + baseOffset
+export default function Needle ({
+  baseWidth = 6,
+  baseOffset = 18,
+  color = 'white',
+  circleRadius = 15,
+  circleColor,
+  children,
+}) {
+  const { currentFillAngle, radius, accentColor } = useContext(Context)
+  const bottom = radius + baseOffset
   const points = `
-    ${center - baseWidth / 2}, ${bottom} ${center + baseWidth / 2}, ${bottom} ${center}, 25
+    ${radius - baseWidth / 2}, ${bottom} ${radius + baseWidth / 2}, ${bottom} ${radius}, 25
   `
-  return (
+  const defaultNeedle = (
     <G>
       <Circle
         r={circleRadius}
-        cx={center}
-        cy={center}
-        fill={circleColor}
+        cx={radius}
+        cy={radius}
+        fill={circleColor || accentColor}
       />
       <Polygon
         points={points}
@@ -32,8 +32,10 @@ export default function Needle ({center, options, accentColor}) {
       />
     </G>
   )
-}
 
-Needle.propTypes = {
-  center: PropTypes.number,
+  return (
+    <G transform={`rotate(${currentFillAngle}, ${radius}, ${radius})`}>
+      {children ? children() : defaultNeedle}
+    </G>
+  )
 }

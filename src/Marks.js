@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react'
 import { polarToCartesian } from './utils'
-import { G, Line, Text } from 'react-native-svg';
+import { G, Line, Text } from 'react-native-svg'
+import Context from './context'
 
 export default function Marks({
-  noLineMarks,
-  rotation,
-  max,
-  step,
-  options,
-  angle,
-  radius,
-  noNumberMarks,
-  fontFamily
+  step = 10,
+  lineCap = 'butt',
+  lineColor = 'white',
+  lineOpacity = 1,
+  numbersRadius = 17,
+  fontSize = 18,
+  lineSize = 12,
+  renderLine,
+  renderNumber,
 }) {
+
+  const {
+    rotation,
+    min,
+    max,
+    angle,
+    radius,
+    fontFamily
+  } = useContext(Context)
 
   const getMarkPosition = (angle, offset) => {
     return polarToCartesian(
@@ -23,19 +33,8 @@ export default function Marks({
     )
   }
 
-  const stepsLength = Math.round(max / step)
+  const stepsLength = Math.round((max - min) / step)
   const marksArr = Array.from(Array(stepsLength + 1))
-
-  const {
-    lineCap = 'butt',
-    lineColor = 'white',
-    lineOpacity = 1,
-    numbersRadius = 17,
-    numbersFontSize = 19,
-    roundNumbers = true
-  } = options
-
-  const getFormatedStepNumber = (val) => roundNumbers ? Math.round(val) : val;
 
   return(
     <>
@@ -43,41 +42,47 @@ export default function Marks({
         const gap = angle / (marksArr.length - 1)
         const actualAngle = gap * i
         const highlight = i%2 == 0
-        const {x: cx, y: cy} = getMarkPosition(actualAngle, 0)
-
-        const lineSize = 15 
+        const {x: x1, y: y1} = getMarkPosition(actualAngle, 0)
         const size = highlight ? lineSize : lineSize - 5
-        const {x: cx2, y: cy2} = getMarkPosition(actualAngle, - size)
+        const {x: x2, y: y2} = getMarkPosition(actualAngle, - size)
         const {x: cxText, y: cyText} = getMarkPosition(actualAngle, - lineSize - numbersRadius)
+
+        const markProps = { x1, y1, x2, y2 }
+
+        const defaultMark = (
+          <Line
+            {...markProps}
+            stroke={lineColor}
+            strokeWidth={highlight ? 3 : 2}
+            strokeOpacity={lineOpacity}
+            strokeLinecap={lineCap}
+          />
+        )
+
+        const numberProps = {
+          x: cxText,
+          y: cyText,
+          transform: `rotate(${360 - rotation}, ${cxText}, ${cyText})`,
+          children: Math.round((i * step) + min),
+        }
+
+        const defaultNumber = (
+          <Text
+            {...numberProps}
+            fill="white"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontFamily={fontFamily}
+            opacity="0.8"
+            fontSize={fontSize}
+          />
+        )
 
         return(
           <G key={i}>
-            {!noLineMarks && (
-              <Line
-                x1={cx}
-                y1={cy}
-                x2={cx2}
-                y2={cy2}
-                stroke={lineColor}
-                strokeWidth={highlight ? 4 : 2}
-                strokeOpacity={lineOpacity}
-                strokeLinecap={lineCap}
-              />
-            )}
-            {highlight && !noNumberMarks && (
-              <Text
-                x={cxText}
-                y={cyText}
-                fill="white"
-                transform={`rotate(${360 - rotation}, ${cxText}, ${cyText})`}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontFamily={fontFamily}
-                opacity="0.8"
-                fontSize={numbersFontSize}
-              >
-                {getFormatedStepNumber(i * step)}
-              </Text>
+            {renderLine ? renderLine(markProps) : defaultMark}
+            {highlight && (
+              renderNumber ? renderNumber(numberProps) : defaultNumber
             )}
           </G>
         )
