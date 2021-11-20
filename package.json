@@ -20,7 +20,9 @@
     "cool",
     "react-native",
     "react-component",
-    "circular-progress"
+    "circular-progress",
+    "thermostat",
+    "clock"
   ],
   "author": "Lucas Said",
   "license": "ISC",
