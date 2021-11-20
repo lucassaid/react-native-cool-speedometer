@@ -1,2 +1,10 @@
 import AnimatedSpeedometer from './src/AnimatedSpeedometer'
 export default AnimatedSpeedometer
+export { default as Arc } from './src/Arc'
+export { default as Background } from './src/Background'
+export { default as DangerPath } from './src/DangerPath'
+export { default as Indicator } from './src/Indicator'
+export { default as Marks } from './src/Marks'
+export { default as Needle } from './src/Needle'
+export { default as Progress } from './src/Progress'
+export { default as useSpeedometerContext } from './src/useSpeedometerContext'
