@@ -110,7 +110,7 @@ Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath
 
 When I said "more customization than you'll use", I meant it.
 
-### Marks
+### Custom line marks
 
 Use `renderLine` to render your own line marks. This function receives the coordinates of the current line: `{ x1, y1, x2, y2 }`, so you can either pass them to a `<Line>` component, or use them to create whatever you want, as long as it is made of SVG.
 
@@ -129,16 +129,9 @@ import { Line } from 'react-native-svg'
 ```
 
 
-If you want to show lines but not numbers, or vice-versa:
+### Custom numbers
 
-```js
-<Marks renderNumber={() => null} /> // shows lines only
-// or
-<Marks renderLine={() => null} /> // shows numbers only
-```
-
-
-Use `renderNumber` to render your own text. This function returns an object with the coordinates, the rotation of the text and the actual number. It is recommended to pass this object to a `<Text>` component
+Use `renderNumber` to render your own text. This function returns an object with the coordinates, the rotation of the text, and the actual number. It is recommended to pass this object to a `<Text>` component.
 
 ```js
 import { Text } from 'react-native-svg'
@@ -154,7 +147,14 @@ import { Text } from 'react-native-svg'
 />
 ```
 
-### Needle
+### Hide lines or numbers
+
+```js
+<Marks renderNumber={() => null} /> // hide numbers
+<Marks renderLine={() => null} /> // hide lines
+```
+
+### Custom needle
 
 Pass a function as children to make a custom Needle. It will rotate automatically.
 
