@@ -47,19 +47,18 @@ export default function Marks({
       const { x, y } = getMarkPosition(actualAngle, - lineSize - numbersRadius, radius)
       
       return {
-        index,
         coordinates: { x1, y1, x2, y2 },
         isEven,
         textProps: { x, y, transform: `rotate(${360 - rotation}, ${x}, ${y})` },
         value: Math.round((index * step) + min)
       }
     })
-  }, [max, min, step, radius, rotation, angle]);
+  }, [max, min, step, radius, rotation, angle])
 
   if (children) return marks.map(children)
 
-  return marks.map(mark => (
-    <G key={mark.index}>
+  return marks.map((mark, i) => (
+    <G key={i}>
       <Line
         {...mark.coordinates}
         stroke={lineColor}
