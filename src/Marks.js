@@ -1,7 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { polarToCartesian } from './utils'
 import { G, Line, Text } from 'react-native-svg'
 import Context from './context'
+
+const getMarkPosition = (angle, offset, radius) => {
+  return polarToCartesian(
+    radius,
+    radius,
+    radius + offset,
+    angle
+  )
+}
 
 export default function Marks({
   step = 10,
@@ -11,8 +20,7 @@ export default function Marks({
   numbersRadius = 17,
   fontSize = 18,
   lineSize = 12,
-  renderLine,
-  renderNumber,
+  children,
 }) {
 
   const {
@@ -24,71 +32,53 @@ export default function Marks({
     fontFamily
   } = useContext(Context)
 
-  const getMarkPosition = (angle, offset) => {
-    return polarToCartesian(
-      radius,
-      radius,
-      radius + offset,
-      angle
-    )
-  }
+  
+  const marks = useMemo(() => { 
+    const stepsLength = Math.round((max - min) / step)
+    const gap = angle / stepsLength
 
-  const stepsLength = Math.round((max - min) / step)
-  const marksArr = Array.from(Array(stepsLength + 1))
+    return [...Array(stepsLength + 1)].map((val, index) => {
+      const actualAngle = gap * index
+      const isEven = index  % 2 == 0
+      const size = isEven ? lineSize : lineSize - 5
 
-  return(
-    <>
-      {marksArr.map((mark, i) => {
-        const gap = angle / (marksArr.length - 1)
-        const actualAngle = gap * i
-        const highlight = i%2 == 0
-        const {x: x1, y: y1} = getMarkPosition(actualAngle, 0)
-        const size = highlight ? lineSize : lineSize - 5
-        const {x: x2, y: y2} = getMarkPosition(actualAngle, - size)
-        const {x: cxText, y: cyText} = getMarkPosition(actualAngle, - lineSize - numbersRadius)
+      const {x: x1, y: y1} = getMarkPosition(actualAngle, 0, radius)
+      const {x: x2, y: y2} = getMarkPosition(actualAngle, - size, radius)
+      const { x, y } = getMarkPosition(actualAngle, - lineSize - numbersRadius, radius)
+      
+      return {
+        index,
+        coordinates: { x1, y1, x2, y2 },
+        isEven,
+        textProps: { x, y, transform: `rotate(${360 - rotation}, ${x}, ${y})` },
+        value: Math.round((index * step) + min)
+      }
+    })
+  }, [max, min, step, radius, rotation]);
 
-        const markProps = { x1, y1, x2, y2 }
+  if (children) return marks.map(children)
 
-        const defaultMark = (
-          <Line
-            {...markProps}
-            stroke={lineColor}
-            strokeWidth={highlight ? 3 : 2}
-            strokeOpacity={lineOpacity}
-            strokeLinecap={lineCap}
-          />
-        )
-
-        const textProps = {
-          x: cxText,
-          y: cyText,
-          transform: `rotate(${360 - rotation}, ${cxText}, ${cyText})`,
-        }
-
-        const number = Math.round((i * step) + min)
-
-        const defaultNumber = (
-          <Text
-            {...textProps}
-            fill="white"
-            textAnchor="middle"
-            alignmentBaseline="middle"
-            fontFamily={fontFamily}
-            opacity={0.8}
-            fontSize={fontSize}
-            children={number}
-          />
-        )
-
-        return(
-          <G key={i}>
-            {renderLine ? renderLine(markProps) : defaultMark}
-            {highlight && (
-              renderNumber ? renderNumber(number, textProps) : defaultNumber
-            )}
-          </G>
-        )
-      })}
-    </>
-  )
+  return marks.map(mark => (
+    <G key={mark.index}>
+      <Line
+        {...mark.coordinates}
+        stroke={lineColor}
+        strokeWidth={mark.isEven ? 3 : 2}
+        strokeOpacity={lineOpacity}
+        strokeLinecap={lineCap}
+      />
+      {mark.isEven && (
+        <Text
+          {...mark.textProps}
+          fill="white"
+          textAnchor="middle"
+          alignmentBaseline="middle"
+          fontFamily={fontFamily}
+          opacity={0.8}
+          fontSize={fontSize}
+          children={mark.value}
+        />
+      )}
+    </G>
+  ))
 }

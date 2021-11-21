@@ -1,6 +1,6 @@
 
 
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Path } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
@@ -18,13 +18,13 @@ export default function Arc ({
     angle,
   } = useContext(Context)
 
-  const secondaryPath = getCirclePath(
+  const secondaryPath = useMemo(() => getCirclePath(
     radius,
     radius,
     radius - arcWidth / 2,
     0,
     angle
-  )
+  ), [radius, arcWidth, angle])
 
   return (
     <Path

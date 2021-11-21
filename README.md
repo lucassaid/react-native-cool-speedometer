@@ -7,6 +7,8 @@ If you are tired of all those boring speedometers for react native, have a look 
 
 ✅ Flexible
 
+✅ Performant
+
 ✅ Support for negative numbers
 
 ✅ Made out of SVG
@@ -132,51 +134,36 @@ Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath
 
 When I said "more customization than you'll use", I meant it.
 
-### Custom line marks
+### Custom marks
 
-Use `renderLine` to render your own line marks. This function receives the coordinates of the current line: `{ x1, y1, x2, y2 }`, so you can either pass them to a `<Line>` component, or use them to create whatever you want, as long as it is made of SVG.
+Pass a function as children to render your own marks. This function receives:
+- `coordinates`: Coordinates of the current line: `{ x1, y1, x2, y2 }`. Either pass them to a `<Line>` component, or use them to create whatever you like, as long as it is made of SVG.
+- `textProps`: Coordinates and rotation for the text: `{ x, y, transform }`. It is recommended you apply this object to a `<Text>` element.
+- `value`: The value of this mark.
+
 
 ```jsx
 import { Line } from 'react-native-svg'
 // later ...
-<Marks
-  renderLine={coordinates => (
-    <Line
-      {...coordinates}
-      // any other prop here, except
-      // x1, y1, x2, and y2
-    />
+<Marks step={5}>
+  {(mark, i) => (
+    <G key={i}>
+      <Line
+        {...mark.coordinates}
+        // any other prop here, except x1, y1, x2, and y2
+      />
+      {(i % 2 == 0) && (
+        // only show the number if the mark is even
+        <Text
+          {...mark.textProps}
+          // any other prop here, except x, y, and transform
+        >
+          {mark.value}
+        </Text>
+      )}
+    </G>
   )}
-/>
-```
-
-
-### Custom numbers
-
-Use `renderNumber` to render your own text. This function returns an object with the coordinates, the rotation of the text, and the actual number. It is recommended to pass this object to a `<Text>` component. This is useful to add some suffix after each number. 
-
-```jsx
-import { Text } from 'react-native-svg'
-// later ...
-<Marks
-  renderNumber={(number, textProps => (
-    <Text
-      {...textProps}
-      // any other prop here, except
-      // x, y, transform, and children
-    >
-      // here we add a suffix to represent degrees
-      {number}°
-    </Text>
-  )}
-/>
-```
-
-### Hide lines or numbers
-
-```jsx
-<Marks renderNumber={() => null} /> // hide numbers
-<Marks renderLine={() => null} /> // hide lines
+</Marks>
 ```
 
 ### Custom needle

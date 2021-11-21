@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Path } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
@@ -16,13 +16,13 @@ export default function Progress ({
     currentFillAngle,
   } = useContext(Context)
 
-  const progressPath = getCirclePath(
+  const progressPath = useMemo(() => getCirclePath(
     radius,
     radius,
     radius - arcWidth / 2,
     0,
     currentFillAngle
-  )
+  ), [radius, arcWidth, currentFillAngle])
 
   return (
     <Path

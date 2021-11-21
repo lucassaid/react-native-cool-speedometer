@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Path } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
@@ -17,13 +17,13 @@ export default function DangerPath ({
     lineCap: globalLineCap,
   } = useContext(Context)
 
-  const circlePath = getCirclePath(
+  const circlePath = useMemo(() => getCirclePath(
     radius,
     radius,
     radius - arcWidth - offset,
     globalAngle - angle,
     globalAngle,
-  )
+  ), [radius, globalAngle, angle, arcWidth, offset])
 
   return (
     <Path

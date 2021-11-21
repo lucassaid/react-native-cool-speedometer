@@ -10,7 +10,7 @@ import Speedometer, {
 
 const Thermostat = () => {
   const center = 250 / 2
-
+  
   return (
     <Speedometer
       value={-10}
@@ -22,28 +22,29 @@ const Thermostat = () => {
         color="#00DEFC"
         opacity={0.3}
       />
-      <Progress />
-      <Marks
-        step={5}
-        renderNumber={(value, textProps) => (
-          <Text
-            {...textProps}
-            textAnchor="middle"
-            alignmentBaseline="middle"
-            fontSize={18}
-            opacity={0.6}
-          >
-            {value}°
-          </Text>
+      <Progress/>
+      <Marks step={5}>
+        {mark => (
+          <>
+            {mark.isEven && (
+              <Text
+                {...mark.textProps}
+                textAnchor="middle"
+                alignmentBaseline="middle"
+                fontSize={18}
+                opacity={0.6}
+              >
+                {mark.value}°
+              </Text>
+            )}
+            <Line
+              {...mark.coordinates}
+              stroke="black"
+              strokeOpacity={0.4}
+            />
+          </>
         )}
-        renderLine={coords => (
-          <Line
-            {...coords}
-            stroke="black"
-            strokeOpacity={0.4}
-          />
-        )}
-      />
+      </Marks>
       <Needle baseOffset={-30} circleRadius={0} color="#444" offset={50} />
       <Indicator>
         {(value, textProps) => (
