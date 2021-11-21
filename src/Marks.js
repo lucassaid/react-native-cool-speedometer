@@ -54,7 +54,7 @@ export default function Marks({
         value: Math.round((index * step) + min)
       }
     })
-  }, [max, min, step, radius, rotation]);
+  }, [max, min, step, radius, rotation, angle]);
 
   if (children) return marks.map(children)
 
