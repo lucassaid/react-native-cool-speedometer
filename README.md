@@ -93,15 +93,15 @@ Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath
   max={11}
   fontFamily='squada-one'
 >
-  <Background angle={180} />
+  <Background />
   <Arc arcWidth={4} />
   <Needle
     baseOffset={40}
     circleRadius={30}
   />
   <DangerPath/>
-  <Progress arcWidth={10}/>
-  <Marks/>
+  <Progress arcWidth={10} />
+  <Marks step={1} />
 </Speedometer>
 ```
 
@@ -156,7 +156,7 @@ import { Text } from 'react-native-svg'
 
 ### Custom needle
 
-Pass a function as children to make a custom Needle. It will rotate automatically.
+Pass a function as children to make a custom needle. It will rotate automatically.
 
 ```js
 <Speedometer width={width}>
@@ -171,6 +171,29 @@ Pass a function as children to make a custom Needle. It will rotate automaticall
       )
     }}
   </Needle>
+</Speedometer>
+```
+
+### Custom indicator
+
+Pass a function as children to make a custom indicator. You can use this to place the indicator in the center of the circle:
+
+```js
+<Speedometer width={width}>
+  <Indicator>
+    {(value, textProps) => (
+      <Text
+        {...textProps} // textProps has only the "transform" property
+        fontSize={40}
+        x={center}
+        y={center + 10}
+        textAnchor="middle"
+        alignmentBaseline="middle"
+      >
+        {value}°
+      </Text>
+    )}
+  </Indicator>
 </Speedometer>
 ```
 
@@ -245,6 +268,7 @@ const App = () => {
 ### Needle
 | Prop | Default | Type | Description
 | :---- | :------ | :--- | :---------
+| offset | 25 | number | Distance from the border of the circle. A higher number will make the needle shorter. |
 | baseWidth | 6 | number | Width of the base of the needle |
 | baseOffset | 18 | number | Distance of the base from the center of the circle |
 | color | 'white' | string | Color of the needle |

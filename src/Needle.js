@@ -3,6 +3,7 @@ import { G, Polygon, Circle } from 'react-native-svg'
 import Context from './context'
 
 export default function Needle ({
+  offset = 25,
   baseWidth = 6,
   baseOffset = 18,
   color = 'white',
@@ -13,7 +14,7 @@ export default function Needle ({
   const { currentFillAngle, radius, accentColor } = useContext(Context)
   const bottom = radius + baseOffset
   const points = `
-    ${radius - baseWidth / 2}, ${bottom} ${radius + baseWidth / 2}, ${bottom} ${radius}, 25
+    ${radius - baseWidth / 2}, ${bottom} ${radius + baseWidth / 2}, ${bottom} ${radius}, ${offset}
   `
   const defaultNeedle = (
     <G>

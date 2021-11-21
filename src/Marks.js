@@ -59,22 +59,24 @@ export default function Marks({
           />
         )
 
-        const numberProps = {
+        const textProps = {
           x: cxText,
           y: cyText,
           transform: `rotate(${360 - rotation}, ${cxText}, ${cyText})`,
-          children: Math.round((i * step) + min),
         }
+
+        const number = Math.round((i * step) + min)
 
         const defaultNumber = (
           <Text
-            {...numberProps}
+            {...textProps}
             fill="white"
             textAnchor="middle"
-            dominantBaseline="middle"
+            alignmentBaseline="middle"
             fontFamily={fontFamily}
-            opacity="0.8"
+            opacity={0.8}
             fontSize={fontSize}
+            children={number}
           />
         )
 
@@ -82,7 +84,7 @@ export default function Marks({
           <G key={i}>
             {renderLine ? renderLine(markProps) : defaultMark}
             {highlight && (
-              renderNumber ? renderNumber(numberProps) : defaultNumber
+              renderNumber ? renderNumber(number, textProps) : defaultNumber
             )}
           </G>
         )
