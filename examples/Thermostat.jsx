@@ -1,5 +1,5 @@
 import React from 'react'
-import { Line, Text } from 'react-native-svg'
+import { Line, Text, G } from 'react-native-svg'
 import Speedometer, {
   Needle,
   Marks,
@@ -24,8 +24,8 @@ const Thermostat = () => {
       />
       <Progress/>
       <Marks step={5}>
-        {mark => (
-          <>
+        {(mark, i) => (
+          <G key={i}>
             {mark.isEven && (
               <Text
                 {...mark.textProps}
@@ -42,7 +42,7 @@ const Thermostat = () => {
               stroke="black"
               strokeOpacity={0.4}
             />
-          </>
+          </G>
         )}
       </Marks>
       <Needle baseOffset={-30} circleRadius={0} color="#444" offset={50} />
