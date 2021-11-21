@@ -25,7 +25,7 @@ npm i react-native-cool-speedometer
 
 # Usage
 ![Default speedometer](./assets/default.png)
-```js
+```jsx
 import Speedometer, {
   Background,
   Arc,
@@ -60,7 +60,7 @@ By default, the size of the component is `250`. You can resize it by passing a d
 
 ![Half speedometer](./assets/half.png)
 
-```js
+```jsx
 <Speedometer
   value={54}
   max={80}
@@ -72,22 +72,30 @@ By default, the size of the component is `250`. You can resize it by passing a d
   <Needle/>
   <Progress/>
   <Marks/>
-  <Indicator
-    suffix="k/h"
-    style={{
-      bottom: 25,
-      fontSize: 60,
-      color: '#555'
-    }}
-  />
+  <Indicator>
+    {(value, textProps) => (
+      <Text
+        {...textProps}
+        fontSize={60}
+        fill="#555"
+        x={250 / 2}
+        y={210}
+        textAnchor="middle"
+        fontFamily='squada-one'
+      >
+        {value}k/m
+      </Text>
+    )}
+  </Indicator>
 </Speedometer>
 ```
 
 ### Rotated
 Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath/>`:
 
-![Rotated speedometer](./assets/rotated.png)
-```js
+![Rotated speedometer](./assets/rotated.png
+)
+```jsx
 <Speedometer
   value={5}
   max={11}
@@ -105,6 +113,20 @@ Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath
 </Speedometer>
 ```
 
+### If speed is not your thing
+
+#### Circular progress
+
+<img src="./assets/progress.png" width="200" height="200" />
+
+[See code](https://github.com/lucassaid/react-native-cool-speedometer/blob/master/examples/CircularProgress.jsx)
+
+#### Thermostat
+
+<img src="./assets/thermostat.png" width="200" height="200" />
+
+[See code](https://github.com/lucassaid/react-native-cool-speedometer/blob/master/examples/Thermostat.jsx)
+
 ---
 # God mode
 
@@ -114,7 +136,7 @@ When I said "more customization than you'll use", I meant it.
 
 Use `renderLine` to render your own line marks. This function receives the coordinates of the current line: `{ x1, y1, x2, y2 }`, so you can either pass them to a `<Line>` component, or use them to create whatever you want, as long as it is made of SVG.
 
-```js
+```jsx
 import { Line } from 'react-native-svg'
 // later ...
 <Marks
@@ -131,25 +153,28 @@ import { Line } from 'react-native-svg'
 
 ### Custom numbers
 
-Use `renderNumber` to render your own text. This function returns an object with the coordinates, the rotation of the text, and the actual number. It is recommended to pass this object to a `<Text>` component.
+Use `renderNumber` to render your own text. This function returns an object with the coordinates, the rotation of the text, and the actual number. It is recommended to pass this object to a `<Text>` component. This is useful to add some suffix after each number. 
 
-```js
+```jsx
 import { Text } from 'react-native-svg'
 // later ...
 <Marks
-  renderNumber={numberProps => (
+  renderNumber={(number, textProps => (
     <Text
-      {...numberProps}
+      {...textProps}
       // any other prop here, except
       // x, y, transform, and children
-    />
+    >
+      // here we add a suffix to represent degrees
+      {number}°
+    </Text>
   )}
 />
 ```
 
 ### Hide lines or numbers
 
-```js
+```jsx
 <Marks renderNumber={() => null} /> // hide numbers
 <Marks renderLine={() => null} /> // hide lines
 ```
@@ -158,7 +183,7 @@ import { Text } from 'react-native-svg'
 
 Pass a function as children to make a custom needle. It will rotate automatically.
 
-```js
+```jsx
 <Speedometer width={width}>
   <Needle>
     {() => {
@@ -178,19 +203,19 @@ Pass a function as children to make a custom needle. It will rotate automaticall
 
 Pass a function as children to make a custom indicator. You can use this to place the indicator in the center of the circle:
 
-```js
+```jsx
 <Speedometer width={width}>
   <Indicator>
     {(value, textProps) => (
       <Text
-        {...textProps} // textProps has only the "transform" property
+        {...textProps} // textProps has the "transform" property only
         fontSize={40}
-        x={center}
-        y={center + 10}
+        x={width / 2}
+        y={width / 2 + 10}
         textAnchor="middle"
         alignmentBaseline="middle"
       >
-        {value}°
+        {value}
       </Text>
     )}
   </Indicator>
@@ -201,7 +226,7 @@ Pass a function as children to make a custom indicator. You can use this to plac
 
 You can achieve virtually anything you need by adding a component that uses this hook and returns SVG:
 
-```js
+```jsx
 const MyCustomSVG = () => {
 
   const {
@@ -226,15 +251,30 @@ const App = () => {
 
   return (
     <Speedometer>
-      <Background>
-      <Needle>
-      <MyCustomSVG>
+      <Background />
+      <Needle />
+      <MyCustomSVG />
     </Speedometer>
   )
 }
 ```
 
+### Just SVG
+
+It is possible to wrap any component inside a `<G>` tag and add more vectors:
+
+```jsx
+<Speedometer>
+  <G opacity={0.4}>
+    <Needle/>
+  </G>
+  <Line />
+  <Polygon />
+</Speedometer>
+```
+
 ---
+
 # Properties
 
 | Prop | Default | Type | Description
@@ -302,7 +342,7 @@ const App = () => {
 | fontSize | 18 | number | Font size of the numbers |
 | lineSize | 12 | number | Large of the lines |
 | renderLine | | function | Function to render custom lines. This function receives the coordinates of the line: `{ x1, y1, x2, y2 }`.  |
-| renderNumber | | function | Function to render custom numbers. This function receives: `{ x, y, transform, children }` |
+| renderNumber | | function | Function to render custom numbers. This function receives the number to show, and the properties to apply to a `<Text>` element: `{ x, y, transform }` |
 
 ### Indicator
 | Prop | Default | Type | Description

@@ -1,6 +1,6 @@
 {
   "name": "react-native-cool-speedometer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cool speedometer for React Native",
   "main": "index.js",
   "scripts": {
