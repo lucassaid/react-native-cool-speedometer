@@ -137,9 +137,13 @@ When I said "more customization than you'll use", I meant it.
 ### Custom marks
 
 Pass a function as children to render your own marks. This function receives:
-- `coordinates`: Coordinates of the current line: `{ x1, y1, x2, y2 }`. Either pass them to a `<Line>` component, or use them to create whatever you like, as long as it is made of SVG.
-- `textProps`: Coordinates and rotation for the text: `{ x, y, transform }`. It is recommended you apply this object to a `<Text>` element.
-- `value`: The value of this mark.
+- **coordinates**  
+Coordinates of the current line: `{ x1, y1, x2, y2 }`. Either pass them to a `<Line>` component, or use them to create whatever you like, as long as it is made of SVG.  
+
+- **textProps**  
+Coordinates and rotation for the text: `{ x, y, transform }`. It is recommended you apply this object to a `<Text>` element.
+- **value**  
+The value of this mark.
 
 
 ```jsx
@@ -328,8 +332,6 @@ It is possible to wrap any component inside a `<G>` tag and add more vectors:
 | numbersRadius | 17 | number | Distance from the border of the circle |
 | fontSize | 18 | number | Font size of the numbers |
 | lineSize | 12 | number | Large of the lines |
-| renderLine | | function | Function to render custom lines. This function receives the coordinates of the line: `{ x1, y1, x2, y2 }`.  |
-| renderNumber | | function | Function to render custom numbers. This function receives the number to show, and the properties to apply to a `<Text>` element: `{ x, y, transform }` |
 
 ### Indicator
 | Prop | Default | Type | Description

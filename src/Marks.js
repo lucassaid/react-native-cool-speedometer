@@ -32,7 +32,6 @@ export default function Marks({
     fontFamily
   } = useContext(Context)
 
-  
   const marks = useMemo(() => { 
     const stepsLength = Math.round((max - min) / step)
     const gap = angle / stepsLength
@@ -53,7 +52,7 @@ export default function Marks({
         value: Math.round((index * step) + min)
       }
     })
-  }, [max, min, step, radius, rotation, angle])
+  }, [max, min, step, radius, rotation, angle, lineSize])
 
   if (children) return marks.map(children)
 
