@@ -101,6 +101,7 @@ Changing `rotation`, `step`, the looking of `<Needle/>`, and adding `<DangerPath
 <Speedometer
   value={5}
   max={11}
+  rotation={-90}
   fontFamily='squada-one'
 >
   <Background />
