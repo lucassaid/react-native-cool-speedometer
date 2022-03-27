@@ -1,13 +1,14 @@
 {
   "name": "react-native-cool-speedometer",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Cool speedometer for React Native",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
     "react-native-svg": "^12.1.0"
   },
   "repository": {
@@ -22,9 +23,15 @@
     "react-component",
     "circular-progress",
     "thermostat",
-    "clock"
+    "clock",
+    "motorcycle",
+    "vehicle"
   ],
   "author": "Lucas Said",
   "license": "ISC",
-  "homepage": "https://github.com/lucassaid/react-native-cool-speedometer#readme"
+  "homepage": "https://github.com/lucassaid/react-native-cool-speedometer#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.43",
+    "@types/react-native": "^0.67.3"
+  }
 }

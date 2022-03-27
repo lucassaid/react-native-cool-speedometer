@@ -1,14 +1,20 @@
 import React, { useContext, useMemo } from 'react'
-import { Path } from 'react-native-svg'
+import { Path, PathProps } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
+
+interface BackgroundProps extends PathProps {
+  angle?: number
+  color?: string
+  opacity?: number
+}
 
 export default function Background({
   angle = 360,
   color = 'black',
   opacity = 0.5,
-  ...props
-}) {
+  ...rest
+}: BackgroundProps) {
 
   const { rotation, radius } = useContext(Context)
   const backgroundStart = rotation + angle / 2
@@ -26,7 +32,7 @@ export default function Background({
       d={backgroundPath}
       fill={color}
       fillOpacity={opacity}
-      {...props}
+      {...rest}
     />
   )
 }

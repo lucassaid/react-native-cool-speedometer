@@ -1,13 +1,20 @@
 import React, { useContext, useMemo } from 'react'
-import { Path } from 'react-native-svg'
+import { Path, PathProps } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
+
+interface ProgressProps extends PathProps {
+  color?: string
+  arcWidth?: number
+  lineCap?: PathProps['strokeLinecap']
+}
 
 export default function Progress ({
   color,
   arcWidth = 5,
   lineCap,
-}) {
+  ...rest
+}: ProgressProps) {
 
   const {
     accentColor,
@@ -31,6 +38,7 @@ export default function Progress ({
       strokeWidth={arcWidth}
       strokeLinecap={lineCap || globalLineCap}
       fill="transparent"
+      {...rest}
     />
   )
 }

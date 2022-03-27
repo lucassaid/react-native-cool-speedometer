@@ -1,13 +1,26 @@
 import React, { useContext } from 'react'
-import { Text } from 'react-native-svg'
+import { Text, TextProps } from 'react-native-svg'
 import Context from './context'
+
+interface IndicatorProps extends TextProps {
+  fontSize?: number
+  color?: string
+  fontFamily?: string
+  textAnchor?: TextProps['textAnchor']
+  children?: (
+    fixedValue: string,
+    textProps: { transform: string }
+  ) => JSX.Element
+}
 
 export default function Indicator({
   fontSize = 45,
   color = 'white',
   fontFamily,
+  textAnchor = 'middle',
   children,
-}) {
+  ...rest
+}: IndicatorProps) {
 
   const {
     value,
@@ -28,10 +41,11 @@ export default function Indicator({
       {...textProps}
       x={radius}
       y={radius + radius / 2 + 10}
-      textAnchor="middle"
+      textAnchor={textAnchor}
       fontSize={fontSize}
       fontFamily={fontFamily || globalFontFamily}
       fill={color}
+      {...rest}
     >
       {fixedValue}
     </Text>

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "jsx": "react-native",
+    "paths": {
+      "react-native-cool-speedometer": ["./src/index"]
+    },
+    "target": "esnext",
+    "declaration": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "lib": ["es2017"],
+  },
+}

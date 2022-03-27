@@ -1,16 +1,24 @@
 
 
 import React, { useContext, useMemo } from 'react'
-import { Path } from 'react-native-svg'
+import { Path, PathProps, SvgProps } from 'react-native-svg'
 import Context from './context'
 import { getCirclePath } from './utils'
+
+interface ArcProps extends PathProps {
+  color?: string
+  opacity?: number
+  arcWidth?: number
+  lineCap?: SvgProps['strokeLinecap']
+}
 
 export default function Arc ({
   color = 'black',
   opacity = 0.3,
   arcWidth = 4,
   lineCap,
-}) {
+  ...rest
+}: ArcProps) {
 
   const {
     radius,
@@ -34,6 +42,7 @@ export default function Arc ({
       strokeWidth={arcWidth}
       strokeLinecap={lineCap || globalLineCap}
       fill='transparent'
+      {...rest}
     />
   )
 }

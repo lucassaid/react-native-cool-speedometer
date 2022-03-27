@@ -1,6 +1,20 @@
-import React, { useMemo } from 'react'
-import { Svg, G } from 'react-native-svg'
+import React, { ReactNode, useMemo } from 'react'
+import { Svg, G, SvgProps } from 'react-native-svg'
 import SpeedometerContext from './context'
+
+export interface SpeedometerProps {
+  width?: number
+  height?: number
+  angle?: number
+  rotation?: number
+  value?: number
+  min?: number
+  max?: number
+  lineCap?: SvgProps['strokeLinecap']
+  accentColor?: string
+  fontFamily?: string
+  children: JSX.Element | ReactNode,
+}
 
 export default function Speedometer({
   width = 250,
@@ -14,7 +28,7 @@ export default function Speedometer({
   accentColor = '#00e0ff',
   fontFamily = 'helvetica',
   children,
-}) {
+}: SpeedometerProps) {
 
   const radius = width / 2
   const currentFillAngle = useMemo(() => {
