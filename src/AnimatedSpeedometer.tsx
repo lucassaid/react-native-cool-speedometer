@@ -49,15 +49,6 @@ export default function AnimatedSpeedometer({
     animate(value)
   }, [value])
 
-  // reAnimate(preFill: number, toVal: number, dur: number, ease: string) {
-  //   this.setState(
-  //     {
-  //       fillAnimation: new Animated.Value(preFill),
-  //     },
-  //     () => this.animate(toVal, dur, ease)
-  //   )
-  // }
-
   function animate(toVal: number) {
     const toValue = toVal >= 0 ? toVal : value
 
