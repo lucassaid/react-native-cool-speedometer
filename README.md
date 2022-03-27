@@ -148,7 +148,8 @@ The value of this mark.
 
 
 ```jsx
-import { Line } from 'react-native-svg'
+import { G, Line } from 'react-native-svg'
+
 // later ...
 <Marks step={5}>
   {(mark, i) => (
@@ -214,11 +215,17 @@ Pass a function as children to make a custom indicator. You can use this to plac
 </Speedometer>
 ```
 
-### useSpeedometerContext
+### SpeedometerContext
 
-You can achieve virtually anything you need by adding a component that uses this hook and returns SVG:
+You can achieve virtually anything you need by using the context:
 
 ```jsx
+import {
+  SpeedometerContext
+} from './react-native-cool-speedometer'
+import { G, Line } from 'react-native-svg'
+import { useContext } from 'react'
+
 const MyCustomSVG = () => {
 
   const {
@@ -232,10 +239,13 @@ const MyCustomSVG = () => {
     accentColor,
     fontFamily,
     value,
-  } = useSpeedometerContext();
+  } = useContext(SpeedometerContext);
 
   return (
-    // some magic SVG here
+    <Line
+      rotation={rotation}
+      // more magic here
+    />
   )
 }
 
@@ -289,13 +299,17 @@ It is possible to wrap any component inside a `<G>` tag and add more vectors:
 | color | 'black' | string | Color of background |
 | opacity | 0.5 | number | Opacity of background |
 
+And any other `Path` prop
+
 ### Arc
 | Prop | Default | Type | Description
 | :---- | :------ | :--- | :---------
 | color | 'black | Color of the arc behind the progress |
 | opacity | 0.3 | Opacity of the arc behind the progress |
 | arcWidth | 4 | number | Width of the arc behind the progress |
-| lineCap | Same as global `lineCap` | string | Line terminations, can be `butt`, `line`, or `square` |
+| lineCap | `lineCap` defined in `<Speedometer>`, or `butt` | string | Line terminations, can be `butt`, `line`, or `square` |
+
+And any other `Path` prop
 
 ### Needle
 | Prop | Default | Type | Description
@@ -316,12 +330,16 @@ It is possible to wrap any component inside a `<G>` tag and add more vectors:
 | lineCap | same as global `lineCap` | string | Line terminations, can be `butt`, `line`, or `square` |
 | offset | 6 | number | Distance from the border of the circle |
 
+And any other `Path` prop
+
 ### Progress
 | Prop | Default | Type | Description
 | :---- | :------ | :--- | :---------
 | color | Same as global `accentColor` | string | Color of the progress bar |
 | arcWidth | 5 | number | Width of the progress bar |
 | lineCap | Same as global `lineCap` | string | Line terminations, can be `butt`, `line`, or `square` |
+
+And any other `Path` prop
 
 ### Marks
 | Prop | Default | Type | Description
@@ -339,5 +357,8 @@ It is possible to wrap any component inside a `<G>` tag and add more vectors:
 | :---- | :------ | :--- | :---------
 | suffix | | string | Text after the value |
 | fontSize | 45 | number | Font size of the indicator |
-| color | 'white' | Text color of the indicator |
+| color | 'white' | string | Text color of the indicator |
 | fontFamily | Same as global `fontFamily` | number | Font family of the indicator |
+| textAnchor | 'middle' | string | Alignment of the indicator, can be `end`, `middle`, or `start` |
+
+Any other `Text` property (`Text` is from 'react-native-svg', not 'react-native')
