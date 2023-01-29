@@ -7,6 +7,7 @@ interface IndicatorProps extends TextProps {
   color?: string
   fontFamily?: string
   textAnchor?: TextProps['textAnchor']
+  fixValue: boolean
   children?: (
     fixedValue: string,
     textProps: { transform: string }
@@ -18,6 +19,7 @@ export default function Indicator({
   color = 'white',
   fontFamily,
   textAnchor = 'middle',
+  fixValue = true,
   children,
   ...rest
 }: IndicatorProps) {
@@ -32,9 +34,11 @@ export default function Indicator({
   const textProps = {
     transform: `rotate(${360 - rotation}, ${radius}, ${radius})`,
   }
-  const fixedValue = Number(value).toFixed() 
+  
+  const fixedValue = fixValue ? Number(value).toFixed() : value.toString();
 
   if (children) return children(fixedValue, textProps)
+  
 
   return (
     <Text
